@@ -2,25 +2,14 @@
  
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
-  distDir: 'dist',
-  async headers() {
-    return [
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: "frame-ancestors 'self' https://*.firebaseapp.com https://*.firebase.com"
-          },
-          {
-            key: 'Cross-Origin-Opener-Policy',
-            value: 'same-origin-allow-popups'
-          }
-        ]
-      }
-    ]
-  },
+  // Only use 'export' and 'distDir' for production builds
+  ...(process.env.NODE_ENV === 'production' 
+    ? { 
+        output: 'export',
+        distDir: 'dist'
+      } 
+    : {}
+  ),
   images: {
     unoptimized: true,
     remotePatterns: [
