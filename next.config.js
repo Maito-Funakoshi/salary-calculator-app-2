@@ -2,6 +2,8 @@
  
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
+  distDir: 'dist',
   async headers() {
     return [
       {
@@ -20,6 +22,7 @@ const nextConfig = {
     ]
   },
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
