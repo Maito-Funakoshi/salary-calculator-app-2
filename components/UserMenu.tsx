@@ -40,7 +40,7 @@ export function UserMenu({ user, onLogout }: UserMenuProps) {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-xl shadow-xl py-2 z-10 border border-gray-200 dark:border-gray-700 transform transition-all duration-200 origin-top-right">
+        <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-black rounded-xl shadow-xl py-2 z-10 border border-gray-200 dark:border-gray-700 transform transition-all duration-200 origin-top-right">
           <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex items-center gap-3">
             <div className="w-10 h-10 rounded-full overflow-hidden border border-gray-200 dark:border-gray-600 flex-shrink-0">
               <Image

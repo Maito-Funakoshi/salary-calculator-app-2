@@ -20,7 +20,7 @@ export const Header = ({ isBlur, setIsBlur, user, signInWithGoogle, handleLogout
         <h1 className="text-2xl font-bold text-center text-gray-800 dark:text-white">給料計算機</h1>
         <Button
           onClick={() => setIsBlur(!isBlur)}
-          className="rounded-full h-8 px-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white"
+          className="rounded-full h-8 px-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white duration-300 hover:scale-105"
         >
           {isBlur ? "表示する" : "ぼかす"}
         </Button>

@@ -13,15 +13,15 @@ export function ThemeToggle() {
       aria-label="テーマ切り替え"
     >
       {/* 太陽アイコン */}
-      <Sun className="h-3 w-3 ml-1 text-yellow-500 z-10" />
+      <Sun className="h-3 w-3 ml-1 text-yellow-300 dark:text-gray-500 z-10" />
       
       {/* 月アイコン */}
-      <Moon className="h-3 w-3 mr-1 text-gray-600 dark:text-gray-400 z-10" />
+      <Moon className="h-3 w-3 mr-1 text-gray-400 dark:text-yellow-300 z-10" />
       
       {/* スライディングサークル */}
       <div
         className={`
-          absolute h-6 w-6 rounded-full bg-white dark:bg-gray-800 
+          absolute h-6 w-6 rounded-full bg-gray-400 dark:bg-gray-800 
           transition-transform duration-300 ease-in-out
           ${theme === 'light' ? '-translate-x-0.5' : 'translate-x-6.5'}
           shadow-md
@@ -33,11 +33,11 @@ export function ThemeToggle() {
         className={`
           absolute inset-0 rounded-full 
           transition-opacity duration-300
-          bg-gradient-to-r from-yellow-400 to-orange-400
+          bg-gradient-to-r from-sky-400 to-sky-200
           dark:bg-gradient-to-r dark:from-blue-800 dark:to-purple-800
           opacity-50
         `}
       />
     </button>
   )
-} 
+}
