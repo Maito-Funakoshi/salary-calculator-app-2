@@ -114,24 +114,34 @@ export const ShiftCard = ({ shift, shifts, setShifts, user }: ShiftCardProps) =>
                   const now = new Date();
                   const timeString = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
 
-                  // 新しい勤怠を追加し、その後で最後の勤怠の開始時間を設定
-                  const newShifts = shifts.map((s) => {
-                    if (s.id === shift.id) {
-                      // 新しい勤怠を作成し、開始時間を現在時刻に設定
-                      const newAttendance = { start: timeString, end: "" };
-                      return {
-                        ...s,
-                        attendances: [...s.attendances, newAttendance],
-                        totalPay: calculateShiftPay(s.hourlyRate, [...s.attendances, newAttendance]) || 0,
-                      };
-                    }
-                    return s;
-                  });
+                  // 勤怠リストの最後の開始時間を確認
+                  const attendances = shift.attendances;
+                  const lastIndex = attendances.length - 1;
+                  
+                  // 最後の勤怠の開始時間が空欄かどうかを確認
+                  if (lastIndex >= 0 && attendances[lastIndex].start === "") {
+                    // 最後の勤怠の開始時間が空欄の場合、そこに現在時刻を設定
+                    updateAttendance(shift.id, "start", lastIndex, timeString, shifts, setShifts, user);
+                  } else {
+                    // 最後の勤怠の開始時間が空欄でない場合、新しい勤怠を追加
+                    const newShifts = shifts.map((s) => {
+                      if (s.id === shift.id) {
+                        // 新しい勤怠を作成し、開始時間を現在時刻に設定
+                        const newAttendance = { start: timeString, end: "" };
+                        return {
+                          ...s,
+                          attendances: [...s.attendances, newAttendance],
+                          totalPay: calculateShiftPay(s.hourlyRate, [...s.attendances, newAttendance]) || 0,
+                        };
+                      }
+                      return s;
+                    });
 
-                  // 状態を更新
-                  setShifts(newShifts);
-                  if (user) {
-                    saveShiftsToFirestore(newShifts, user);
+                    // 状態を更新
+                    setShifts(newShifts);
+                    if (user) {
+                      saveShiftsToFirestore(newShifts, user);
+                    }
                   }
                 }}
                 className="text-sm sm:text-md py-1 px-4
