@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { useAuth } from "@/contexts/AuthContext"
 import { ShiftEntry } from "./types/types"
 import { loadShiftsFromFirestore } from "./utils/firebaseUtils"
@@ -13,6 +13,7 @@ export default function SalaryCalculator() {
   const { user, signInWithGoogle, logout } = useAuth();
   const [shifts, setShifts] = useState<ShiftEntry[]>([]);
   const [isBlur, setIsBlur] = useState<boolean>(false);
+  const shiftsContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (user) {
@@ -26,6 +27,12 @@ export default function SalaryCalculator() {
       }]);
     }
   }, [user]);
+
+  useEffect(() => {
+    if (shiftsContainerRef.current) {
+      shiftsContainerRef.current.scrollTop = shiftsContainerRef.current.scrollHeight;
+    }
+  }, [shifts.length]);
 
   const handleLogout = async () => {
     await logout(() => {
@@ -43,7 +50,10 @@ export default function SalaryCalculator() {
         handleLogout={handleLogout} 
       />
 
-      <div className="h-[360px] sm:h-[400px] md:h-[480px] overflow-y-auto rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
+      <div 
+        ref={shiftsContainerRef} 
+        className="h-[360px] sm:h-[400px] md:h-[480px] overflow-y-auto rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent"
+      >
         {shifts.map((shift) => (
           <ShiftCard 
             key={shift.id} 
